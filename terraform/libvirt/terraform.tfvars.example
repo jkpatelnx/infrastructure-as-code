@@ -1,0 +1,27 @@
+#######################################
+# libvirt infrastructure variables
+#######################################
+
+libvirt_uri = "qemu:///system"
+
+vm_count       = 1
+vm_name_prefix = "ubuntu-vm"
+vm_memory      = 2048
+vm_vcpu        = 2
+vm_disk_size   = 30
+
+storage_pool    = "default"
+base_image_name = "ubuntu-noble-base.qcow2"
+bridge_name     = "br0"
+
+
+#######################################
+# user-data variables
+#######################################
+
+ssh_public_key     = "ssh-ed25519 AAAA...replace-with-your-public-key"
+tailscale_auth_key = "tskey-auth-xxxx-replace-me"
+
+vm_username     = "jitendra"
+hostname_prefix = "ip"
+timezone        = "Asia/Kolkata"

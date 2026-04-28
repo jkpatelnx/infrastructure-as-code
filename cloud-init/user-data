@@ -1,0 +1,41 @@
+#cloud-config
+
+package_update: true
+
+users:
+  - default
+  - name: ${vm_username}
+    groups: sudo
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
+packages:
+  - qemu-guest-agent
+  - curl
+
+timezone: ${timezone}
+
+runcmd:
+  - systemctl enable --now qemu-guest-agent
+  - |
+    curl -fsSL https://tailscale.com/install.sh | sh
+    tailscale up --authkey=${tailscale_auth_key}
+
+    for i in $(seq 1 20); do
+      TS_IP=$(ip -4 addr show tailscale0 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+      if [ -n "$TS_IP" ]; then
+        DASHED_IP=$(echo "$TS_IP" | sed 's/\./-/g')
+        hostnamectl set-hostname "${hostname_prefix}-$DASHED_IP"
+        echo "$TS_IP" > /root/tailscale-ip.txt
+        break
+      fi
+      sleep 2
+    done
+
+power_state:
+  mode: reboot
+  message: "Cloud-init complete. Rebooting to apply changes."
+  timeout: 10
+  condition: true
