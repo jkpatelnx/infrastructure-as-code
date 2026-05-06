@@ -11,6 +11,7 @@ locals {
       private_subnet_2_cidr = "10.0.4.0/24"
 
       bucket_count = 1
+      table_count  = 1
     }
     stg = {
       instance_count        = 2
@@ -22,6 +23,7 @@ locals {
       private_subnet_2_cidr = "10.1.4.0/24"
 
       bucket_count = 2
+      table_count  = 2
     }
     prd = {
       instance_count        = 3
@@ -33,6 +35,7 @@ locals {
       private_subnet_2_cidr = "10.2.4.0/24"
 
       bucket_count = 3
+      table_count  = 3
     }
   }
   current = lookup(local.env, terraform.workspace, local.env["dev"])
@@ -69,6 +72,11 @@ module "s3" {
   s3_bucket_count = local.current.bucket_count
 }
 
+module "dynamodb" {
+  source = "./modules/dynamodb"
+  env = terraform.workspace
+  dynamodb_table_count = local.current.table_count
+}
 
 module "ec2_public_1" {
   source             = "./modules/ec2"
@@ -110,3 +118,4 @@ module "ec2_private_2" {
   name_suffix        = "prv-az2"
   depends_on         = [module.vpc]
 }
+
