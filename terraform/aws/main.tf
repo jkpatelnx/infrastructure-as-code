@@ -3,27 +3,36 @@ locals {
   env = {
     dev = {
       instance_count        = 1
+      
       vpc_cidr              = "10.0.0.0/16"
       public_subnet_1_cidr  = "10.0.1.0/24"
       public_subnet_2_cidr  = "10.0.2.0/24"
       private_subnet_1_cidr = "10.0.3.0/24"
       private_subnet_2_cidr = "10.0.4.0/24"
+
+      bucket_count = 1
     }
     stg = {
       instance_count        = 2
+
       vpc_cidr              = "10.1.0.0/16"  
       public_subnet_1_cidr  = "10.1.1.0/24"
       public_subnet_2_cidr  = "10.1.2.0/24"
       private_subnet_1_cidr = "10.1.3.0/24"
       private_subnet_2_cidr = "10.1.4.0/24"
+
+      bucket_count = 2
     }
     prd = {
       instance_count        = 3
+
       vpc_cidr              = "10.2.0.0/16"  
       public_subnet_1_cidr  = "10.2.1.0/24"
       public_subnet_2_cidr  = "10.2.2.0/24"
       private_subnet_1_cidr = "10.2.3.0/24"
       private_subnet_2_cidr = "10.2.4.0/24"
+
+      bucket_count = 3
     }
   }
   current = lookup(local.env, terraform.workspace, local.env["dev"])
@@ -53,6 +62,13 @@ module "vpc" {
   private_route_table_1_name   = "${local.ws}-private-rt-1"
   private_route_table_2_name   = "${local.ws}-private-rt-2"
 }
+
+module "s3" {
+  source          = "./modules/s3"
+  env             = terraform.workspace
+  s3_bucket_count = local.current.bucket_count
+}
+
 
 module "ec2_public_1" {
   source             = "./modules/ec2"
