@@ -37,6 +37,11 @@ if [ -d /etc/kubernetes ]; then
 fi
 
 ############################################################
+# Perform pre-flight checks
+############################################################
+sudo kubeadm reset pre-flight checks
+
+############################################################
 # Join Kubernetes Cluster
 ############################################################
 echo "[INFO] Joining Kubernetes cluster..."
