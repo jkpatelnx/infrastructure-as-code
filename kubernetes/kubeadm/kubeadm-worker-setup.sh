@@ -12,10 +12,17 @@ fi
 ############################################################
 # Variables
 ############################################################
-HOST_NAME="worker-01"
-CONTROL_PLANE_IP="192.168.10.102"
-TOKEN="<token>"
-DISCOVERY_TOKEN_CA_CERT_HASH="<hash>"
+
+read -p "Enter Worker Hostname serial [01]: " HOST_SERIAL
+HOST_NAME="worker-${HOST_SERIAL:-01}"
+
+read -p "Enter Control Plane IP: " CONTROL_PLANE_IP
+read -p "Enter kubeadm Token: " TOKEN
+read -p "Enter Discovery Token CA Cert Hash: " DISCOVERY_TOKEN_CA_CERT_HASH
+
+#CONTROL_PLANE_IP="192.168.10.102"
+#TOKEN="<token>"
+#DISCOVERY_TOKEN_CA_CERT_HASH="<hash>"
 
 ############################################################
 # Configure Hostname

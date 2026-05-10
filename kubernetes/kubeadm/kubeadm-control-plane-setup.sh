@@ -12,9 +12,18 @@ fi
 ############################################################
 # Variables
 ############################################################
-POD_NETWORK_CIDR="192.168.0.0/16"
-CONTROL_PLANE_IP="172.31.89.68"
-CONTROL_PLANE_NAME="control-plane"
+read -p "Enter Pod Network CIDR [192.168.0.0/16]: " POD_NETWORK_CIDR
+POD_NETWORK_CIDR=${POD_NETWORK_CIDR:-192.168.0.0/16}
+
+read -p "Enter Control Plane IP: " CONTROL_PLANE_IP
+
+read -p "Enter Control Plane Name [control-plane]: " CONTROL_PLANE_NAME
+CONTROL_PLANE_NAME=${CONTROL_PLANE_NAME:-control-plane}
+
+#POD_NETWORK_CIDR="192.168.0.0/16"
+#CONTROL_PLANE_IP="172.31.89.68"
+#CONTROL_PLANE_NAME="control-plane"
+
 CALICO_VERSION="3.28.0"
 
 ############################################################

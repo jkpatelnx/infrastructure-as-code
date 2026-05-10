@@ -18,7 +18,6 @@ CNI_VERSION="1.5.0"
 KUBERNETES_VERSION="1.30.1-1.1"
 KUBERNETES_REPO_VERSION="1.30"
 
-
 ############################################################
 # 1.
 # Disable Swap
