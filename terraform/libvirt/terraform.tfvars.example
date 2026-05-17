@@ -10,8 +10,8 @@ vm_memory      = 2048
 vm_vcpu        = 2
 vm_disk_size   = 30
 
-storage_pool    = "default"
-base_image_name = "ubuntu-noble-base.qcow2"
+storage_pool    = "default"  #guest_images <-- the pool we actually created  
+base_image_name = "ubuntu-24.04-minimal-cloudimg-amd64.img"
 bridge_name     = "br0"
 
 
