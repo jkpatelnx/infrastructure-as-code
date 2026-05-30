@@ -1,0 +1,43 @@
+#######################################
+# Proxmox provider / connection
+#######################################
+
+proxmox_endpoint     = "https://192.168.10.11:8006/"
+proxmox_api_token    = "root@pam!terraform=xxxx-xxxxx-xxxxx"
+proxmox_insecure     = true
+proxmox_ssh_username = "root"
+proxmox_ssh_private_key_file = "~/.ssh/id_ed25519" 
+target_node          = "proxmox"
+
+#######################################
+# Proxmox infrastructure variables
+#######################################
+
+vm_count       = 1
+vm_name_prefix = "ubuntu-vm"
+# vm_id_start  = 9000   # leave unset → Proxmox auto-assigns the next free VMID
+vm_memory      = 2048
+vm_vcpu        = 2
+vm_disk_size   = 30
+
+datastore_id         = "local-lvm" # storage for VM disks
+snippet_datastore_id = "local"     # storage with 'snippets' content enabled
+image_datastore_id   = "local"     # storage with 'iso' content enabled
+bridge_name          = "vmbr0"
+
+# Base cloud image imported as the VM disk:
+#   source_image_path   = the file you downloaded onto the Proxmox node (source)
+#   imported_image_name = what Proxmox stores it as in the datastore (destination)
+source_image_path   = "/root/images/ubuntu-24.04-minimal-cloudimg-amd64.img"
+imported_image_name = "ubuntu-noble-base.img"
+
+#######################################
+# user-data variables
+#######################################
+
+ssh_public_key     = "xxxx-xxxxx-xxxxx-xxxx-xxxxx-xxxxx"
+tailscale_auth_key = "tskey-auth-xxxx-xxxxx-xxxxx"
+
+vm_username     = "jitendra"
+hostname_prefix = "ip"
+timezone        = "Asia/Kolkata"
